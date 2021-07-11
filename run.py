@@ -1,9 +1,9 @@
 from typing import Tuple
-from pysocketchat import create_app
+from server import create_server
 
 
-connection = create_app()
+server = create_server()
 
 while True:
-    connectedsocket, address = connection.accept()
-    print("Connection from {address} established".format(address = address))
+    connectedsocket, address = server.accept()
+    print("server from {address} established".format(address = address))
