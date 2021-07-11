@@ -2,7 +2,7 @@ import socket
 import json
 
 
-def create_server():
+def create_client():
     connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     with open('configs.json') as json_file:
