@@ -7,9 +7,8 @@ def create_client():
 
     with open('configs.json') as json_file:
         configs = json.load(json_file)
+        json_file.close()
 
     connection.bind((socket.gethostname(), configs["port"]))
-
-    connection.listen(5)
 
     return connection

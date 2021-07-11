@@ -7,6 +7,7 @@ def create_server():
 
     with open('configs.json') as json_file:
         configs = json.load(json_file)
+        json_file.close()
 
     connection.bind((socket.gethostname(), configs["port"]))
 
