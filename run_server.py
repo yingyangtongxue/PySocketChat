@@ -12,7 +12,6 @@ def run():
         while True:
             connectedsocket, address = server.accept()
             print(f"client from {address[0]}:{address[1]} established")
-            connectedsocket.send(bytes(json.dumps({"response": "response here!!"}), "utf-8"))
 
     except KeyboardInterrupt:
         print('\n\nShutting down..')
