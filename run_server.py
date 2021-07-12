@@ -10,7 +10,7 @@ def run():
 
     while True:
         connectedsocket, address = server.accept()
-        print("server from {address} established".format(address = address))
+        print("client from {address} established".format(address = address))
         connectedsocket.send(bytes(json.dumps({"response": "response here!!"}), "utf-8"))
 
 
