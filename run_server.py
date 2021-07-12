@@ -8,10 +8,15 @@ def run():
 
     server = create_server()
 
-    while True:
-        connectedsocket, address = server.accept()
-        print("server from {address} established".format(address = address))
-        connectedsocket.send(bytes(json.dumps({"response": "response here!!"}), "utf-8"))
+    try:
+        while True:
+            connectedsocket, address = server.accept()
+            print(f"client from {address[0]}:{address[1]} established")
+            connectedsocket.send(bytes(json.dumps({"response": "response here!!"}), "utf-8"))
+
+    except KeyboardInterrupt:
+        print('\n\nShutting down..')
+        exit()
 
 
 run()

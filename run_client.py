@@ -12,11 +12,18 @@ def run():
         configs = json.load(json_file)
         json_file.close()
 
-    client.connect((socket.gethostname(), configs["port"]))
+    server_addr = (socket.gethostname(), configs["port"])
+    client.connect(server_addr)
 
-    while True:
-        message = client.recv(1024)
-        print(message.decode("utf-8"))
+    try:
+        username = input('Your name? ')
+
+        while True:
+            to_send = input(f'{username}> ')
+
+    except KeyboardInterrupt:
+        print('\n\nSee ya..')
+        exit()
 
 
 run()
