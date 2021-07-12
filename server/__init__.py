@@ -5,12 +5,12 @@ import json
 def create_server():
     connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    with open('configs.json') as json_file:
+    with open('server/configs.json') as json_file:
         configs = json.load(json_file)
         json_file.close()
 
     connection.bind((socket.gethostname(), configs["port"]))
 
-    connection.listen(5)
+    connection.listen()
 
     return connection
