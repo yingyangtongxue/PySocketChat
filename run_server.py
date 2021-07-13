@@ -1,6 +1,6 @@
 from server import create_server
 from threading import Thread
-import json
+from tests import active_threads_test
 
 
 def listen_client(addr, connected_clients):
@@ -28,6 +28,12 @@ def run():
     server = create_server()
     connected_clients = {}
 
+    '''test = Thread(
+            target=active_threads_test, 
+            daemon = True
+        )
+    test.start()'''
+    
     try:
         while True:
             connected_socket, address = server.accept()
@@ -44,6 +50,7 @@ def run():
 
     except KeyboardInterrupt:
         for client in list(connected_clients.values()):
+            client.shutdown()
             client.close()
         print('\n\nShutting down..')
         exit()
