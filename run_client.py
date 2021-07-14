@@ -19,7 +19,7 @@ def listen_messages(client, display):
         sys.stdout.write('\x1b[0G')             # move o cursor do terminal para o inicio da linha
         sys.stdout.write('\x1b[0K')             # apaga toda a linha a partir do cursor até o fim
         print(msg)                              # imprime a mensagem do servidor
-        print(display, end="", flush=True)      # imprime o display para inserção de nova mensagem
+        print(display, end="", flush=True)                # imprime o display para inserção de nova mensagem
 
 def run():
     """Função para instanciar cliente e conectar com servidor"""
