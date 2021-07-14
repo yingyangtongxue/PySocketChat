@@ -48,11 +48,10 @@ def run():
         print("welcome to the chat\n\n")
         while True:
             to_send = input(display)
-            client.sendto(bytes(f"{display} {to_send}", "utf-8"), (socket.gethostname(), configs["port"])) # Envia a mensagem digitada pelo cliente atual para o servidor
+            client.sendto(bytes(display+to_send, "utf-8"), (socket.gethostname(), configs["port"])) # Envia a mensagem digitada pelo cliente atual para o servidor
 
     except KeyboardInterrupt: # Em caso de derrubar o servidor com Ctrl+C
         client.sendto(bytes("\\quit", "utf-8"), (socket.gethostname(), configs["port"])) # Mandando mensagem ao servidor para desconexão
-        client.shutdown()
         client.close()
         print('\n\nSee ya..')  
         exit()

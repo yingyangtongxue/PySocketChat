@@ -52,7 +52,6 @@ def run():
 
     except KeyboardInterrupt: # Em caso de derrubar o servidor com Ctrl+C
         for client in list(connected_clients.values()):
-            client.shutdown()
             client.close()
         print('\n\nShutting down..')
         exit()
