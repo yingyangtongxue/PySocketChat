@@ -3,7 +3,15 @@ from client import create_client
 import socket
 import json
 import sys
+import os
 
+def active_windows_special_char():
+    """Função para ativar os caracteres de escape ANSI no Windows. 
+    Não há necessidade no Linux"""
+    if os.name == 'nt':
+        from ctypes import windll
+        k = windll.kernel32
+        k.SetConsoleMode(k.GetStdHandle(-11), 7)
 
 def listen_messages(client, display):
     while True:
@@ -18,7 +26,7 @@ def run():
 
     client = create_client()
 
-    with open('server/configs.json') as json_file:
+    with open('server/configs.json') as json_file: # Abre o JSON com as configurações que serão usadas
         configs = json.load(json_file)
         json_file.close()
 
@@ -26,6 +34,7 @@ def run():
     client.connect(server_addr)
 
     try:
+        active_windows_special_char()           # Faz tratamento de caracteres especiais
         username = input('Your name? ')
         display = f'{username}> '
 
@@ -34,18 +43,18 @@ def run():
             args = (client, display,)
         )
         t.daemon = True
-        t.start()
+        t.start()                               # Inicia uma thread para ficar escutando mensagens que chegam do servidor
 
         print("welcome to the chat\n\n")
         while True:
             to_send = input(display)
-            client.sendto(bytes(f"{display} {to_send}", "utf-8"), (socket.gethostname(), configs["port"]))
+            client.sendto(bytes(display+to_send, "utf-8"), (socket.gethostname(), configs["port"])) # Envia a mensagem digitada pelo cliente atual para o servidor
 
-    except KeyboardInterrupt:
-        client.sendto(bytes("\\quit", "utf-8"), (socket.gethostname(), configs["port"]))
+    except KeyboardInterrupt: # Em caso de derrubar o servidor com Ctrl+C
+        client.sendto(bytes("\\quit", "utf-8"), (socket.gethostname(), configs["port"])) # Mandando mensagem ao servidor para desconexão
         client.close()
         print('\n\nSee ya..')  
         exit()
-    
+
 
 run()
